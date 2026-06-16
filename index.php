@@ -4,14 +4,28 @@ $username = "irisfungyee";
 $password = "F7*PLPCW]9bW]QF_";
 $dbname = "irisfungyee";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+
+  $sql = "SELECT * FROM student WHERE email='$email' AND password='$password'";
+
+// Execute the SQL query
+  $result = $conn->query($sql);
+
+// Process the result set
+  if ($result->num_rows > 0) {
+  header("Location:booklist.php");
+  
+  echo "Login Successful";
+  } else {
+  echo "Invalid email or password";
+  }
 }
-//echo "Connected successfully";
+
 ?>
 
 <!DOCTYPE html>
