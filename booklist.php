@@ -65,8 +65,8 @@ if ($conn->connect_error) {
         mysqli_close($conn);
         ?>
 
-        <a href=""><input type="submit" value="Profile"></a>
-        <a href=""><input type="submit" value="AddBook"></a>
+        <a href="profile.php"><input type="submit" value="Profile"></a>
+        <a href="addBook.php"><input type="submit" value="AddBook"></a>
         <a href=""><input type="submit" value="LogOut"></a>
     </table>
 

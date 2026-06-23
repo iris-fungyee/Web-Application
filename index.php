@@ -1,10 +1,18 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "irisfungyee";
 $password = "F7*PLPCW]9bW]QF_";
 $dbname = "irisfungyee";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -18,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Process the result set
   if ($result->num_rows > 0) {
+  $_SESSION["email"] = $_POST["email"];
   header("Location:booklist.php");
   
   echo "Login Successful";

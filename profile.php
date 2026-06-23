@@ -3,7 +3,7 @@ $servername = "localhost";
 $username = "irisfungyee";
 $password = "F7*PLPCW]9bW]QF_";
 $dbname = "irisfungyee";
-
+session_start();
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -43,7 +43,7 @@ if ($conn->connect_error) {
         </tr>
         <?php
 
-        $query = "SELECT * FROM student";
+        $query = "SELECT * FROM student WHERE email='" . $_SESSION["email"] . "'";
 
         $result = mysqli_query($conn, $query) or die("Couldn't execute query");
 
