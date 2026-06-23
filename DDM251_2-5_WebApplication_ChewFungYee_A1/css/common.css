@@ -1,0 +1,90 @@
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    
+    body {
+      margin: 0;
+      font-family: Poppins, sans-serif;
+      display: flex;
+      background-color: #BFDDF0;
+    }
+
+    /*Table styling */
+      table,
+        th,
+        td {
+            border: 1px solid white;
+        }
+
+    table {
+     border-collapse: collapse;
+     margin: 20px;
+     background-color: #FFEBCC;
+    }
+
+      th {
+        background-color: #8CC0EB;
+        color: white;
+        padding: 10px;
+        text-align: center;
+    }
+
+      td{
+        text-align: center;
+      }
+
+    input[type=button] {
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: #8CC0EB;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        font-size: 15px;
+        margin: 5px;
+    }
+
+      input[type=submit] {
+        padding: 12px;
+        margin: 20px;
+        cursor: pointer;
+        background-color: #8CC0EB;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        font-size: 15px;
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+      width: 200px;
+      background-color: #FFEBCC;
+      color: #8CC0EB;
+      height: 100vh;
+      padding: 20px;
+      margin-left: 20px;
+    }
+
+    .sidebar button
+     {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      background:  #8CC0EB;
+      color: #FFEBCC;
+      text-align: left;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      
+    }
+
+    .btn{
+      text-decoration:none;
+      color: #FFEBCC;
+    }
+    
+    .sidebar button:hover {
+      background: #BFDDF0;
+    }

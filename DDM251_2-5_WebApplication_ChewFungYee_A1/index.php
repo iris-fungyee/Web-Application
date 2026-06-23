@@ -47,8 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <style>
+     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
     * {
-      font-size: 20px;
+
+      font-family: Poppins, sans-serif;
     }
 
     body {
@@ -59,19 +62,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     .login-box {
-      background: #BFDDF0;
-      width: 300px;
+      background: #FFEBCC;
+      width: 500px;
     }
 
     .login-header {
-      background: #8CC0EB;
+      background: #FFEBCC;
       text-align: center;
       padding: 20px;
     }
 
     .login-header h2 {
-      font-size: 25px;
-      color: #FFEBCC;
+      font-size: 30px;
+      color:  #8CC0EB;
     }
 
     .login-header p {
@@ -82,12 +85,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       padding: 20px;
     }
 
-    .login-body .login-btn {
+    .login-body .login-btn,
+    .login-body .signup-btn
+     {
       background: #8CC0EB;
-    }
-
-    .login-body .signup-btn {
-      background: #FFEBCC;
+      border: none;
+      padding: 6px;
+      border-radius: 5px;
     }
 
   </style>
@@ -97,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="login-box">
     <div class="login-header">
-      <h2>Welcome to icfyshop</h2>
+      <h2>Welcome to iCFY Shop</h2>
       <p>Sign in</p>
     </div>
 
