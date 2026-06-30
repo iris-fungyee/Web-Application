@@ -44,8 +44,8 @@ if ($conn->connect_error) {
         
         <tr>
             <form action="updateProfile.php" method="POST">
-                <td><input type=text name=password></td>
-                <td><input type=text name=confirm_password></td>
+                <td><input type=password name=password></td>
+                <td><input type=password name=confirm_password></td>
                 <td><input type=text name=name></td>
                 <td><input type=text name=year_joined></td>
                 <td><input type=submit value=Submit></td>

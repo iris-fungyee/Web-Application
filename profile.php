@@ -53,7 +53,7 @@ if ($conn->connect_error) {
                 <td><?php echo $row["name"] ?></td>
                 <td><?php echo $row["email"] ?></td>
                 <td><?php echo $row["yearjoin"] ?></td>
-                <td><input type="button" value="Edit"></td>
+                <td><button><a href="editProfile.php">Edit</a></button></td>
             </tr>
         <?php
         }

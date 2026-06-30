@@ -4,6 +4,8 @@ $username = "irisfungyee";
 $password = "F7*PLPCW]9bW]QF_";
 $dbname = "irisfungyee";
 
+session_start();
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -57,7 +59,10 @@ if ($conn->connect_error) {
                 <td><?php echo $row['author'] ?></td>
                 <td><?php echo $row['description'] ?></td>
                 <td><?php echo $row['price'] ?></td>
-                <td><input type="button" value="Edit"></td>
+                <td>
+                  <a href="editBook.php?ISBN=<?php echo $row['ISBN']; ?>">
+                  <input type="button" value="Edit">
+                </td>
                 <td><button>Delete</button></td>
             </tr>
         <?php

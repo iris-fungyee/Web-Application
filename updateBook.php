@@ -3,7 +3,7 @@ $servername = "localhost";
 $username = "irisfungyee";
 $password = "F7*PLPCW]9bW]QF_";
 $dbname = "irisfungyee";
- session_start();
+
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
@@ -12,11 +12,11 @@ if (!$conn) {
 }
 
 // SQL to update a record
-$sql = "UPDATE student SET name='" . $_POST["name"] . "', password='" . $_POST["password"] . "' , yearjoin='" . $_POST["year_joined"] . "' WHERE email= '" . $_SESSION["email"] . "'";
+$sql = "UPDATE booklist SET title='" . $_POST["title"] . "' , author='" . $_POST["author"] . "' , description='" . $_POST["description"] . "' , price='" . $_POST["price"] . "' WHERE ISBN= '" . $_SESSION["ISBN"] . "'";
 
 if (mysqli_query($conn, $sql)) {
   
-  header ("Location: profile.php");
+  header ("Location: booklist.php");
 } else {
   echo "Error updating record: " . mysqli_error($conn);
 }
