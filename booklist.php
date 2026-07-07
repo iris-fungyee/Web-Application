@@ -5,6 +5,10 @@ $password = "F7*PLPCW]9bW]QF_";
 $dbname = "irisfungyee";
 
 session_start();
+// Check if user is logged in
+if (!isset($_SESSION["email"])) {
+    header("Location: index.php");
+}
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

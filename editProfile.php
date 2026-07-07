@@ -11,6 +11,10 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+if (isset($_GET["error"])) {
+    echo "<p style='color:red'>" . $_GET["error"] . "</p>";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -43,11 +47,11 @@ if ($conn->connect_error) {
         </tr>
         
         <tr>
-            <form action="updateProfile.php" method="POST">
-                <td><input type=password name=password></td>
-                <td><input type=password name=confirm_password></td>
-                <td><input type=text name=name></td>
-                <td><input type=text name=year_joined></td>
+            <form action="updateProfile.php" method="POST" required>
+                <td><input type=password name=password minlength="6" required></td>
+                <td><input type=password name=confirm_password minlength="6" required></td>
+                <td><input type=text name=name required></td>
+                <td><input type=text name=year_joined maxlength="4"></td>
                 <td><input type=submit value=Submit></td>
             </form>
         </tr>
