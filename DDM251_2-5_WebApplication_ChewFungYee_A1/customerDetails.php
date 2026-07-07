@@ -10,7 +10,14 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+$customerID = $_GET['customerID'];
+
+$query = "SELECT * FROM customer WHERE customerID='$customerID'";
+$result = mysqli_query($conn, $query) or die("Couldn't execute query");
+$customer = mysqli_fetch_assoc($result);
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +48,9 @@ if ($conn->connect_error) {
         <button>
            <a href="customer.php" class="btn">Customer</a>
         </button>
-        <button>Product</button>
+        <button>
+            <a href="product.php" class="btn">Product</a>
+        </button>
         <button>Order</button>
         <button>Log out</button>
     </div>
@@ -54,30 +63,22 @@ if ($conn->connect_error) {
             <th width="200">Name</th>
             <th width="200">Password</th>
         </tr>
-        <?php
-
-        $query = "SELECT * FROM customer";
-
-        $result = mysqli_query($conn, $query) or die("Couldn't execute query");
-
-        while ($row = mysqli_fetch_assoc($result)) {
-        ?>
+       
             <tr>
-                <td><?php echo $row['customerID'] ?></td>
-                <td><?php echo $row['username'] ?></td>
-                <td><?php echo $row['name'] ?></td>
-                <td><?php echo $row['password'] ?></td>
+                <td><?php echo $customer['customerID'] ?></td>
+                <td><?php echo $customer['username'] ?></td>
+                <td><?php echo $customer['name'] ?></td>
+                <td><?php echo $customer['password'] ?></td>
             </tr>
 
-        <?php
-        }
-        mysqli_close($conn);
-        ?>
+
         </div>
 
         <a href="customer.php"><input type="submit" value="Back"></a>
-        <a href=""><input type="submit" value="Edit"></a>
+        <a href="editCustomer.php?customerID=<?php echo $customer['customerID'] ?>"><input type="button" value="Edit"></a>
 
 
     </body>
 </html>
+
+     

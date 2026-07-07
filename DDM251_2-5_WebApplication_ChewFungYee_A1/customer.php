@@ -41,7 +41,9 @@ if ($conn->connect_error) {
          <button>
            <a href="customer.php" class="btn">Customer</a>
         </button>
-        <button>Product</button>
+        <button>
+            <a href="product.php" class="btn">Product</a>
+        </button>
         <button>Order</button>
         <button>Log out</button>
     </div>
@@ -66,9 +68,11 @@ if ($conn->connect_error) {
                 <td><?php echo $row['username'] ?></td>
                 <td><?php echo $row['name'] ?></td>
                 <td> 
-                    <a href="customerDetails.php"><input type="button" value="Details"></a>
+                    <a href="customerDetails.php?customerID=<?php echo $row['customerID'] ?>"><input type="button" value="Details"></a>
                 </td>
-                <td><input type="button" value="Edit"></td>
+                <td>
+                    <a href="editCustomer.php?customerID=<?php echo $row['customerID'] ?>"><input type="button" value="Edit"></a>
+                </td>
                 <td><input type="button" value="Delete"></td>
             </tr>
         <?php
