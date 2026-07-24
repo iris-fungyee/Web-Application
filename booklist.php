@@ -66,8 +66,14 @@ if ($conn->connect_error) {
                 <td>
                   <a href="editBook.php?ISBN=<?php echo $row['ISBN']; ?>">
                   <input type="button" value="Edit">
+                  
                 </td>
-                <td><button>Delete</button></td>
+                <td>
+                  <a href="deleteBook.php?ISBN=<?php echo $row['ISBN']; ?>" 
+                  onclick="return confirm('Are you sure you want to delete ISBN <?php echo $row['ISBN']; ?>?');">
+                  <input type="button" value="Delete">
+  </a>
+                </td>
             </tr>
         <?php
         }
@@ -75,8 +81,8 @@ if ($conn->connect_error) {
         ?>
 
         <a href="profile.php"><input type="submit" value="Profile"></a>
-        <a href="addBook.php"><input type="submit" value="AddBook"></a>
-        <a href=""><input type="submit" value="LogOut"></a>
+        <a href="addBook.php"><input type="submit" value="Add Book"></a>
+        <a href="logOut.php"><input type="submit" value="Log Out"></a>
     </table>
 
 </body>

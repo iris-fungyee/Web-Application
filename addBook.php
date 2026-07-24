@@ -11,8 +11,11 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-?>
+if (isset($_GET['error'])) {
+    echo $_GET['error'];
+}
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
