@@ -73,7 +73,12 @@ if ($conn->connect_error) {
                 <td>
                     <a href="editCustomer.php?customerID=<?php echo $row['customerID'] ?>"><input type="button" value="Edit"></a>
                 </td>
-                <td><input type="button" value="Delete"></td>
+                <td> 
+                    <a href="deleteCustomer.php?customerID=<?php echo $row['customerID']; ?>" 
+                    onclick="return confirm('Are you sure you want to delete Customer ID <?php echo $row['customerID']; ?>?');">
+                    <input type="button" value="Delete">
+                    </a>
+                </td>
             </tr>
         <?php
         }

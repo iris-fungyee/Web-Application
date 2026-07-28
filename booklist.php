@@ -72,7 +72,7 @@ if ($conn->connect_error) {
                   <a href="deleteBook.php?ISBN=<?php echo $row['ISBN']; ?>" 
                   onclick="return confirm('Are you sure you want to delete ISBN <?php echo $row['ISBN']; ?>?');">
                   <input type="button" value="Delete">
-  </a>
+                  </a>
                 </td>
             </tr>
         <?php
