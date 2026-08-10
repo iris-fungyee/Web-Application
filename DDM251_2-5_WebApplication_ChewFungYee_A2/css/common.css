@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+
+:root {
+    --ink-green:   #1f3a2e;
+    --ink-green-2: #2c4f3d;
+    --manila:      #e9dfc4;
+    --manila-2:    #f2ead2;
+    --card-white:  #fbf8ef;
+    --brass:       #b98a3d;
+    --stamp-red:   #a13d33;
+    --line:        #cbb98c;
+    --text-main:   #2a2620;
+    --text-muted:  #6b6350;
+
+    --font-header: 'Lora', serif;
+    --font-body:    'IBM Plex Mono';
+
+}
+
+* { box-sizing: border-box; }
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 640px;
+    margin: auto;
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+    background-color: var(--manila);
+    font-family: var(--font-body);
+    color: var(--text-main);
+    line-height: 1.5;
+    
+}
+
+.error-message {
+    color: var(--card-white);
+    background-color: var(--stamp-red);
+    padding: 5px;
+    text-align: center;
+}
+
+h1, h2 {
+    font-weight: 600;
+    color: var(--ink-green);
+}
+
+a { color: var(--ink-green-2); }
+
+.login-box {
+    background-color: var(--card-white);
+    width: 400px;
+}
