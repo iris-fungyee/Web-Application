@@ -62,6 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <div id="container">
+        <div class="header">
+            <h1>SecondChapter</h1>
+        </div>
+        
         <div class="register-box">
             <div class="register-header">
                 <h2>Join SecondChapter</h2>
