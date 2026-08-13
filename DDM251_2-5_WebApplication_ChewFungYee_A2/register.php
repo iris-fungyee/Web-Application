@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="register-box">
             <div class="register-header">
                 <h2>Join SecondChapter</h2>
-                <p>Begin and create your personal library card</p>
+                <p>Begin and create your personal library card.</p>
             </div>
 
             <div class="register-body">
@@ -82,16 +82,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <form action="register.php" method="POST">
                     <h3>FULL NAME</h3>
-                    <input type="text" name="fullname">
+                    <input type="text" name="fullname" required>
 
                     <h3>EMAIL ADDRESS</h3>
-                    <input type="text" name="email">
+                    <input type="text" name="email" required>
 
                     <h3>PHONE NUMBER</h3>
-                    <input type="text" name="phonenum">
+                    <input type="text" name="phonenum" required>
 
                     <h3>FAVOURITE GENRE</h3>
-                        <select name="categoryID">
+                        <select name="categoryID" required>
 
                         <option value="">No preference yet</option>
 
@@ -108,10 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </select>
 
                     <h3>PASSWORD</h3>
-                    <input type="password" name="password">
+                    <input type="password" name="password" required>
 
                     <h3>CONFIRM PASSWORD</h3>
-                    <input type="password" name="confirm_password">
+                    <input type="password" name="confirm_password" required>
                     <button type="submit" class="index-btn">REGISTER</button>   
                 </form>
 

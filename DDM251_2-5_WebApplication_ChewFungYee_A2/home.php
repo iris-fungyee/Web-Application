@@ -21,8 +21,48 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
     $user = $result->fetch_assoc();
+
     $fullname = $user['fullname'];
+    $categoryID = $user['categoryID'];
 }
+
+$selectedCategory = $_GET['booklist'] ?? '';
+if ($selectedCategory != "") {
+
+    // User clicked a category
+  $recommendSQL = "SELECT * FROM booklist WHERE categoryID = (SELECT categoryID FROM bookcategory WHERE categoryName = '$selectedCategory')
+                  ORDER BY RAND()
+                  LIMIT 4";
+
+} else if ($categoryID == NULL) {
+
+    // No category selected + user has no preference
+  $recommendSQL = "SELECT * FROM booklist
+                  ORDER BY RAND()
+                  LIMIT 4";
+
+} else {
+    // No category selected + user has a favourite category
+    $recommendSQL = "SELECT * FROM booklist WHERE categoryID = $categoryID ORDER BY donatedDate DESC
+                     LIMIT 4";
+}
+
+$recommendResult = $conn->query($recommendSQL);
+
+if ($selectedCategory != "") {
+
+    // Show recent books from selected category
+    $recentSQL = "SELECT * FROM booklist WHERE categoryID = (SELECT categoryID FROM bookcategory WHERE categoryName = '$selectedCategory')
+                  ORDER BY donatedDate DESC
+                  LIMIT 4";
+
+} else {
+    // Show all recently donated books
+    $recentSQL = "SELECT * FROM booklist ORDER BY donatedDate DESC
+                  LIMIT 4";
+}
+
+$recentResult = $conn->query($recentSQL);
 ?>
 
 <!DOCTYPE html>
@@ -65,18 +105,73 @@ if ($result->num_rows > 0) {
         <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Sci-Fi") ? "active" : ""; ?>" name="booklist" value="Sci-Fi">Sci-Fi</button>
         <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Biography") ? "active" : ""; ?>" name="booklist" value="Biography">Biography</button>
         <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Self-Help") ? "active" : ""; ?>" name="booklist" value="Self-Help">Self-Help</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Children's") ? "active" : ""; ?>" name="booklist" value="Children's">Children's</button>
+        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Childrens") ? "active" : ""; ?>" name="booklist" value="Childrens">Children's</button>
         <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Other") ? "active" : ""; ?>" name="booklist" value="Other">Other</button>
       </form>
     </div>
 
-     <div class="section-title">
+    <div class="section-title">
       <h2>Recommended For You</h2>
+    </div>
+
+    <div class="book-list">
+
+    <?php
+    if ($recommendResult->num_rows > 0) {
+    while ($book = $recommendResult->fetch_assoc()) {
+    ?>
+      
+      <div class="book-card">
+          <img 
+              src="images/<?php echo $book['bookImage']; ?>" 
+          >
+          <h3><?php echo $book['title']; ?></h3>
+          <p><?php echo $book['author']; ?></p>
+      </div>
+
+    <?php
+    }
+
+    } else {
+    ?>
+      <p class="no-books">
+        No books here yet. Be the first to donate one!
+      </p>
+    <?php
+    }
+    ?>
     </div>
 
     <div class="section-title">
       <h2>Recently Donated</h2>
     </div>
+
+    <div class="book-list">
+
+    <?php
+    if ($recentResult->num_rows > 0) {
+    while ($book = $recentResult->fetch_assoc()) {
+    ?>
+
+      <div class="book-card">
+            <img 
+              src="images/<?php echo $book['bookImage']; ?>" 
+            >
+            <h3><?php echo $book['title']; ?></h3>
+            <p><?php echo $book['author']; ?></p>
+      </div>
+    <?php
+    }
+
+    } else {
+    ?>
+      <p class="no-books">
+        No books here yet. Be the first to donate one!
+      </p>
+    <?php
+    }
+    ?>
+  </div>
 
     <div class="banner-title">
       <h3>Have A Book To Share?</h3>

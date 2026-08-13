@@ -24,7 +24,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 640px;
+    max-width: 375px;
     margin: auto;
 }
 
@@ -43,6 +43,22 @@ body {
     background-color: var(--stamp-red);
     padding: 5px;
     text-align: center;
+}
+
+.book-list {
+    display: flex;
+    gap: 10px;
+}
+
+.book-card {
+    width: 150px;
+}
+
+.book-card img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    display: block;
 }
 
 h1, h2 {
