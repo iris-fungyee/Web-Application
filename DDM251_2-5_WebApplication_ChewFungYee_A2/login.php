@@ -11,6 +11,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $email = $_POST["email"] ?? "";
@@ -46,6 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
 
             } else {
+
+                $_SESSION['email'] = $_POST['email'];
+
                 header("Location: home.php");
                 exit();
             }

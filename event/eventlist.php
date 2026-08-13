@@ -12,7 +12,6 @@ if ($conn->connect_error) {
 }
 
 session_start();
-
 if (!isset($_SESSION['userID'])) {
     header("Location: index.php");
     exit();
@@ -24,8 +23,11 @@ $message = "";
 
 if (isset($_POST['bookEvent'])) {
 
+    $email = $_SESSION['email'];
     $eventID = $_POST['eventID'];
-
+    $eventName = $_POST['eventName'];
+    $eventDate = $_POST['eventDate'];
+    
     // Check if already booked
     $check = mysqli_query($conn,
         "SELECT * FROM bookinglist
@@ -38,16 +40,26 @@ if (isset($_POST['bookEvent'])) {
 
     } else {
 
+        $slotCheckQuery = mysqli_query($conn, "SELECT slotsBooked, totalSlots FROM eventlist WHERE eventID='$eventID'");
+        $slotData = mysqli_fetch_assoc($slotCheckQuery);
+
+            if ($slotData['slotsBooked'] >= $slotData['totalSlots']) {
+
+                $message = "Sorry, this event is fully booked!";
+
+            } else {
+
         mysqli_query($conn,
-            "INSERT INTO bookinglist(userID, eventID)
-             VALUES('$userID','$eventID')");
-             
+            "INSERT INTO bookinglist(userID, email, eventID, eventName, eventDate)
+             VALUES('$userID', '$email', '$eventID', '$eventName', '$eventDate')");
+
         mysqli_query($conn,
         "UPDATE eventlist
         SET slotsBooked = slotsBooked + 1
         WHERE eventID='$eventID'");
 
         $message = "Event booked successfully!";
+        }
     }
 }
 
@@ -81,14 +93,18 @@ if (isset($_POST['bookEvent'])) {
     ?>
 
     <div>
-        <a href=""><input type="submit" value="Profile"></a>
+        <a href="profile.php"><input type="submit" value="Profile"></a>
     </div>
+
+    <h3>Events</h3>
 
         <form method="GET">
             <button class="<?php echo (isset($_GET['eventDate']) && $_GET['eventDate']=="2026-07-28") ? "active" : ""; ?>" name="eventDate" value="2026-07-28">28 July 2026</button>
             <button class="<?php echo (isset($_GET['eventDate']) && $_GET['eventDate']=="2026-07-29") ? "active" : ""; ?>" name="eventDate" value="2026-07-29">29 July 2026</button>
             <button class="<?php echo (isset($_GET['eventDate']) && $_GET['eventDate']=="2026-07-30") ? "active" : ""; ?>" name="eventDate" value="2026-07-30">30 July 2026</button>
         </form>
+
+    </br>
 
      <table width="1000">
         <tr>
@@ -97,6 +113,7 @@ if (isset($_POST['bookEvent'])) {
             <th>Event Description</th>
             <th>Slots</th>
         </tr>
+    
 
         <?php
         if (isset($_GET['eventDate']) && $_GET['eventDate'] != "") {
@@ -109,6 +126,7 @@ if (isset($_POST['bookEvent'])) {
         $result = mysqli_query($conn, $query) or die("Couldn't execute query");
 
         while ($row = mysqli_fetch_assoc($result)) {
+            
         ?>
 
 
@@ -120,7 +138,14 @@ if (isset($_POST['bookEvent'])) {
                 <td>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="eventID" value="<?php echo $row['eventID']; ?>">
-                        <input type="submit" name="bookEvent" value="Book Event">
+                        <input type="hidden" name="eventName" value="<?php echo $row['eventName']; ?>">
+                        <input type="hidden" name="eventDate" value="<?php echo $row['eventDate']; ?>">
+                       <?php if ($row['slotsBooked'] >= $row['totalSlots']) { ?>
+                            <input type="button" value="Fully Booked" disabled>
+                        <?php } else { ?>
+                            <input type="submit" name="bookEvent" value="Book Event">
+                        <?php } ?>
+                        <!-- <input type="submit" name="bookEvent" value="Book Event"> -->
                     </form>
                 </td>
                 

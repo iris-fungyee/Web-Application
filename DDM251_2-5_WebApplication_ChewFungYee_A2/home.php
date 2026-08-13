@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "secondchapter";
 $password = "cB]EYDah/79Jos0O";
@@ -9,6 +11,17 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
+}
+
+$email = $_SESSION['email']; //?? "" means else
+
+$sql = "SELECT * FROM user WHERE email = '$email'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+
+    $user = $result->fetch_assoc();
+    $fullname = $user['fullname'];
 }
 ?>
 
@@ -28,7 +41,7 @@ if ($conn->connect_error) {
 
     <div class="home-box">
       <div class="home-header">
-        <h2>Welcome In, </h2>
+        <h2>Welcome In, <?php echo $fullname; ?> </h2>
         <p>Looking for your next read?</p>
 
         <div class="search-bar">
