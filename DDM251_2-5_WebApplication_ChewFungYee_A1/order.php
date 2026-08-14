@@ -10,22 +10,6 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-//if (isset($_GET["error"])) {
-//  echo "<p style='color:red'>" . $_GET["error"] . "</p>";
-//}
-
-if (isset($_GET["error"])) {
-    echo "<p class='error-message'>" . htmlspecialchars($_GET["error"]) . "</p>";
-}
-
-session_start();
-
-$productID = $_GET['productID'];
-
-$query = "SELECT * FROM product WHERE productID='$productID'";
-$result = mysqli_query($conn, $query);
-$row = mysqli_fetch_assoc($result);
-
 ?>
 
 <!DOCTYPE html>
@@ -33,11 +17,11 @@ $row = mysqli_fetch_assoc($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
+    <title>Order List</title>
     <link rel="stylesheet" href="css/common.css">
-    <style>
+    <style>       
 
-       input[type=submit] {
+    input[type=submit] {
         padding: 12px;
         margin: 20px;
         cursor: pointer;
@@ -48,19 +32,10 @@ $row = mysqli_fetch_assoc($result);
         font-size: 15px;
     }
 
-    .error-message {
-    color: #d8000c;
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 </style>
 </head>
 <body>
-
-    <div class="sidebar">
+  <div class="sidebar">
         <h2>iCFY Shop</h2>
         <button>Dashboard</button>
          <button>
@@ -75,37 +50,57 @@ $row = mysqli_fetch_assoc($result);
             <span class="arrow">&#9660;</span>
         </button>
             <div class="dropdown-container">
-                <a href="" class="sub-btn">Create An Order</a>
+                <a href="createOrder.php" class="sub-btn">Create An Order</a>
                 <a href="order.php" class="sub-btn">Order List</a>
          </div>
         </div>
         <button>Log out</button>
     </div>
 
-    <a href="product.php"><input type="submit" value="Back"></a>
-
-     <div>
-        <h3>Edit Product Information</h3>
+    <div>
     <table width="1000">
+        <h3 class="title"> Order List </h3>
         <tr>
-            <th width="200">Product ID</th>
-            <th width="200">Product Name</th>
-            <th width="200">Description</th>
-            <th width="200">Price</th>
-          
+            <th  width="200">Order ID</th>
+            <th  width="200">Username</th>
+            <th  width="200">Name</th>
+            <th  width="200">Order Date and Time</th>
+
         </tr>
+        <?php
+
+        $query = "SELECT * FROM orderlist GROUP BY orderID, username, name, orderDate";
         
-        <tr>
-            <form action="updateProduct.php" method="POST">
-                <td><input type=text name=productID value="<?php echo $row['productID']; ?>" readonly> </td>
-                <td><input type=text name=productName></td>
-                <td><input type=text name=description ></td>
-                <td><input type=text name=price></td>
-                <td><input type=submit value=Submit></td>
-            </form>
-        </tr>
+        $result = mysqli_query($conn, $query) or die("Couldn't execute query");
+
+        while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+            <tr>
+                <td><?php echo $row['orderID'] ?></td>
+                <td><?php echo $row['username'] ?></td>
+                <td><?php echo $row['name'] ?></td>
+                <td><?php echo $row['orderDate'] ?></td>
+                <td> 
+                    <a href="orderDetails.php?orderdetailsID=<?php echo $row['orderdetailsID']; ?>">
+                    <input type="button" value="Details">
+                    </a>
+                 <td> 
+                <td>    
+                    <input type="button" value="Edit">
+                </td>
+                <td> 
+                    <input type="button" value="Delete">
+                </td>
+            </tr>
+        <?php
+        }
+        mysqli_close($conn);
+        ?>
+        </div>
+
+        <a href="createOrder.php"><input type="submit" value="Create New Order"></a>
+        
     </table>
-    </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

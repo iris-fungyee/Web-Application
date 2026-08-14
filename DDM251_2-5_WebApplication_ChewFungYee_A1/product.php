@@ -44,7 +44,16 @@ if ($conn->connect_error) {
         <button>
             <a href="product.php" class="btn">Product</a>
         </button>
-        <button>Order</button>
+        <div class="dropdown">
+        <button class="dropdown-btn">
+            Order
+            <span class="arrow">&#9660;</span>
+        </button>
+            <div class="dropdown-container">
+                <a href="" class="sub-btn">Create An Order</a>
+                <a href="order.php" class="sub-btn">Order List</a>
+         </div>
+        </div>
         <button>Log out</button>
     </div>
 
@@ -92,5 +101,16 @@ if ($conn->connect_error) {
         <a href="addProduct.php"><input type="submit" value="Add Product"></a>
         
     </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownBtn = document.querySelector(".dropdown-btn");
+        
+        dropdownBtn.addEventListener("click", function () {
+            const parent = this.parentElement;
+            parent.classList.toggle("active");
+        });
+    });
+</script>
 </body>
 </html>
