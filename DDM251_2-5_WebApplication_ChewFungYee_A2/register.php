@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "secondchapter";
 $password = "cB]EYDah/79Jos0O";
@@ -11,43 +13,51 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$fullname = '';
+$email = '';
+$phonenum = '';
+$categoryID = '';
+$password = '';
+$confirm_password = '';
+$error = "";
 
-    $fullname = $_POST['fullname'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $phonenum = $_POST['phonenum'] ?? '';
-    $categoryID = $_POST['categoryID'] ?? '';
-    $password = $_POST['password'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+    $fullname = $_POST['fullname'] ?? ''; 
+    $email = $_POST['email'] ?? ''; 
+    $phonenum = $_POST['phonenum'] ?? ''; 
+    $categoryID = $_POST['categoryID'] ?? ''; 
+    $password = $_POST['password'] ?? ''; 
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-    if (
-        empty($fullname) || empty($email) || empty($phonenum) || empty($password) || empty($confirm_password)) {
-        header("Location: register.php?error=Please fill in all fields.");
-        exit();
-    }
+if (empty($fullname) || empty($email) || empty($phonenum) || empty($password) || empty($confirm_password)) 
+{
+    $error = "Please fill in all fields.";
 
-    else if (strlen($password) < 6) {
-        header("Location: register.php?error=Password must be at least 6 characters long.");
-        exit();
-    }
+} else if (strlen($password) < 6) {
 
-    else if ($password != $confirm_password) {
-        header("Location: register.php?error=Password and Confirm Password must be the same.");
-        exit();
-    }
+    $error = "Password must be at least 6 characters long.";
 
-    else if ($categoryID === '') {
+} else if ($password != $confirm_password) {
+
+    $error = "Password and Confirm Password must be the same.";
+}
+
+if ($error == "") {
+
+    if ($categoryID === '') {
         $categoryID = NULL;
     }
 
-    $sql = "INSERT INTO user 
-            (fullname, email, phonenum, categoryID, password)
-            VALUES ('$fullname', '$email', '$phonenum', '$categoryID', '$password')";
+    $sql = "INSERT INTO user (fullname, email, phonenum, categoryID, password)
+            VALUES ('$fullname', '$email', '$phonenum', " . ($categoryID === NULL ? "NULL" : "'$categoryID'") . ",'$password')";
 
     if (mysqli_query($conn, $sql)) {
-
+        $_SESSION['email'] = $email;
+        
         header("Location: home.php");
-    } 
+        exit();
+    }
+}
 }
 
 ?>
@@ -61,63 +71,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-    <div id="container">
+    <div class="header-banner">
         <div class="header">
-            <h1>SecondChapter</h1>
-        </div>
-        
-        <div class="register-box">
-            <div class="register-header">
+            <h1>Second<span class="logo">Chapter</span></h1>
+        </div>  
+    </div>
+
+    <div id="container">
+        <div class="access-box">
+            <div class="access-header">
                 <h2>Join SecondChapter</h2>
                 <p>Begin and create your personal library card.</p>
             </div>
 
-            <div class="register-body">
-
-                <?php
-                    if (isset($_GET['error'])) {
-                    echo '<p class="error-message">' . htmlspecialchars($_GET['error']) . '</p>';
-                    }   
+            <div class="access-body">
+              <?php
+                if ($error != "") {
+                echo '<p class="error-message">' . htmlspecialchars($error) . '</p>';
+                }
                 ?>
 
                 <form action="register.php" method="POST">
-                    <h3>FULL NAME</h3>
-                    <input type="text" name="fullname" required>
 
-                    <h3>EMAIL ADDRESS</h3>
-                    <input type="text" name="email" required>
+                    <label for="fullname">FULL NAME</label>
+                    <input type="text" name="fullname" value="<?php echo htmlspecialchars($fullname); ?>">
 
-                    <h3>PHONE NUMBER</h3>
-                    <input type="text" name="phonenum" required>
+                    <label for="email">EMAIL ADDRESS</label>
+                    <input type="text" name="email" value="<?php echo htmlspecialchars($email); ?>">
 
-                    <h3>FAVOURITE GENRE</h3>
-                        <select name="categoryID" required>
+                    <label for="phonenum">PHONE NUMBER</label>
+                    <input type="tel" name="phonenum"  value="<?php echo htmlspecialchars($phonenum); ?>">
+
+                    <label for="category">FAVOURITE GENRE</label>
+                        <select name="categoryID">
 
                         <option value="">No preference yet</option>
-
                         <?php
                         $result = $conn->query("SELECT categoryID, categoryName FROM bookcategory");
                         while ($row = $result->fetch_assoc()) {
                         ?>
-                        <option value="<?php echo $row['categoryID']; ?>">
-                            <?php echo $row['categoryName']; ?>
+                        <option 
+                            value="<?php echo $row['categoryID']; ?>"
+                            <?php if ($categoryID == $row['categoryID']) echo "selected"; ?>
+                        >
+                        <?php echo $row['categoryName']; ?>
                         </option>
                         <?php
                         }
                         ?>
                         </select>
 
-                    <h3>PASSWORD</h3>
-                    <input type="password" name="password" required>
+                    <label for="password">PASSWORD</label>
+                    <input type="password" name="password">
 
-                    <h3>CONFIRM PASSWORD</h3>
-                    <input type="password" name="confirm_password" required>
+                    <label for="confirm_password">CONFIRM PASSWORD</label>
+                    <input type="password" name="confirm_password">
                     <button type="submit" class="index-btn">REGISTER</button>   
                 </form>
 
-                <p>Already have an account? <a href="login.php">Log in</a></p>
+                <p>Already have an account? <a href="index.php">Log in</a></p>
             </div>
         </div>
+    </div>
+
+    <div class="header-banner">
     </div>
 </body>
 </html>

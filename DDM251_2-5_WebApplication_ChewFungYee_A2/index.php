@@ -19,17 +19,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"] ?? "";
 
     if (empty($email) || empty($password)) {
-    header("Location: login.php?error=Please enter your email and password.");
+    header("Location: index.php?error=Please enter your email and password.");
     exit();
     }
 
     else if ($email === "") {
-    header("Location: login.php?error=Please enter your email.");
+    header("Location: index.php?error=Please enter your email.");
     exit();
     }
 
     else if ($password === "") {
-    header("Location: login.php?error=Please enter your password.");
+    header("Location: index.php?error=Please enter your password.");
     exit();
     }
 
@@ -37,14 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
 
     if ($result->num_rows == 0) {
-            header("Location: login.php?error=Email is not found.");
+            header("Location: index.php?error=Email is not found.");
             exit();
     } else {
             $user = $result->fetch_assoc();
             }
 
     if ($user["password"] != $password) {
-                header("Location: login.php?error=Your password is incorrect.");
+                header("Location: index.php?error=Your password is incorrect.");
                 exit();
 
             } else {
@@ -66,18 +66,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-<div id="container">
+ 
+<div class="header-banner">
     <div class="header">
-        <h1>SecondChapter</h1>
-    </div>
-    
-    <div class="login-box">
-        <div class="login-header">
+        <h1>Second<span class="logo">Chapter</span></h1>
+    </div>  
+</div>
+
+<div id="container">    
+    <div class="access-box">
+        <div class="access-header">
             <h2>Welcome In</h2>
             <p>Your personal digital library card.</p>
         </div>
 
-        <div class="login-body">
+        <div class="access-body">
 
             <?php
                 if (isset($_GET['error'])) {
@@ -86,9 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?> 
 
             <form target="_self" method="POST">
-                <h3>EMAIL ADDRESS</h3>
+                <label for="email">EMAIL ADDRESS</label>
                 <input type="text" name="email">
-                <h3>PASSWORD</h3>
+
+                <label for="password">PASSWORD</label>
                 <input type="password" name="password">
                 <button type="submit" class="index-btn">LOGIN</button>   
             </form>
@@ -97,5 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+
 </body>
 </html>

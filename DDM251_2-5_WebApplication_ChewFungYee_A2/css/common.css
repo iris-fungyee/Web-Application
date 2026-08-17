@@ -20,12 +20,10 @@
 * { box-sizing: border-box; }
 
 #container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     max-width: 375px;
-    margin: auto;
+    margin: 0 auto;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
 }
 
 body {
@@ -33,9 +31,30 @@ body {
     margin: 0;
     background-color: var(--manila);
     font-family: var(--font-body);
+    font-size: 14px;
     color: var(--text-main);
-    line-height: 1.5;
-    
+    line-height: 1.5; 
+}
+
+h2 {
+    font-size: 25px;
+}
+
+.banner {
+    color: var(--manila-2);
+    text-align: center;
+    padding-top: 0.9rem;
+}
+
+h2, h3 {
+    font-family: var(--font-header);
+    font-weight: 700;
+    color: var(--ink-green);
+}
+
+a { 
+    color: var(--brass); 
+    text-decoration: none;
 }
 
 .error-message {
@@ -43,6 +62,196 @@ body {
     background-color: var(--stamp-red);
     padding: 5px;
     text-align: center;
+}
+
+/*Header*/
+.header-banner {
+    width: 100%;
+    background: var(--ink-green);
+    border-bottom: 4px double var(--brass);
+}
+
+.header {
+    max-width: 375px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink-green);
+    color: var(--manila-2);
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+}
+
+h1 {
+    font-family: var(--font-header);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--manila-2);
+}
+
+.logo { 
+    color: var(--brass); 
+}
+
+.profile-icon {
+    color: var(--brass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/*Log In & Register & Donate*/
+.access-box,
+.donate-box
+{
+    background-color: var(--card-white);
+    border: 1px solid var(--line);
+    box-shadow: 3px 3px 0 rgba(31, 58, 46, 0.08);
+    padding: 1.5rem;
+    position: relative;
+    margin: 2.5rem auto;
+}
+
+.access-box::before,
+.donate-box::before
+{
+    content: '';
+    position: absolute;
+    top: 0; left: 22px;
+    width: 1px; height: 100%;
+    background: var(--stamp-red);
+    opacity: 0.25;
+}
+
+.access-header,
+.access-body,
+.donate-body,
+.donate-header {
+    padding-left: 1.5rem;
+}
+
+/*Buttons*/
+.index-btn {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.65rem 1.3rem;
+    border: 2px solid var(--ink-green);
+    background: var(--ink-green);
+    color: var(--manila-2);
+    cursor: pointer;
+    width: 100%; 
+    text-align: center;
+    margin-top: 1.4rem; 
+}
+
+.second-btn {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.65rem 1.3rem;
+    border: 2px solid var(--line);
+    background: var(--manila-2);
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: center;
+    width: calc(100% - 2.8rem);
+    margin: 0 auto 1.4rem auto;
+}
+
+/*Forms*/
+label {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin: 1.5rem 0 0.3rem;
+}
+
+input[type=text], 
+input[type=email], 
+input[type=password], 
+input[type=tel],
+select, textarea {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--line);
+    background: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    color: var(--text-main);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--brass);
+    outline-offset: 1px;
+}
+
+textarea { 
+    resize: vertical; min-height: 80px; 
+}
+
+/*Search Bar*/
+.search-border {
+    background: var(--ink-green);
+    padding: 1rem 1.1rem;
+    box-sizing: border-box;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-white);
+    border: 1px solid var(--brass);
+    padding: 0.65rem 0.9rem;
+    margin: 0;               
+    width: 100%;             
+    box-sizing: border-box;
+}
+
+.search-bar svg { 
+    flex-shrink: 0;
+    color: var(--text-muted);
+    display: block;          
+    margin: 0; 
+}
+
+.search-bar input {
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    background: transparent;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.search-bar input:focus { 
+    outline: none; 
+}
+
+/*Section Title*/
+.section-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 0.2rem;
+    margin: 2rem 0 1rem;
+}
+
+.section-title h2 { 
+    margin: 0; 
 }
 
 .book-list {
@@ -61,14 +270,7 @@ body {
     display: block;
 }
 
-h1, h2 {
-    font-weight: 600;
-    color: var(--ink-green);
-}
 
-a { color: var(--ink-green-2); }
 
-.login-box {
-    background-color: var(--card-white);
-    width: 400px;
-}
+
+
