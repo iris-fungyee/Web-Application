@@ -40,7 +40,15 @@ if (empty($fullname) || empty($email) || empty($phonenum) || empty($password) ||
 } else if ($password != $confirm_password) {
 
     $error = "Password and Confirm Password must be the same.";
-}
+} else {
+        // Check if email is already registered in the 'user' table
+        $sql = "SELECT * FROM user WHERE email='$email'";
+        $emailResult = $conn->query($sql);
+
+        if ($emailResult->num_rows > 0) {
+            $error = 'This email is already registered. Please log in.';
+        }
+    }
 
 if ($error == "") {
 
@@ -53,7 +61,6 @@ if ($error == "") {
 
     if (mysqli_query($conn, $sql)) {
         $_SESSION['email'] = $email;
-        
         header("Location: home.php");
         exit();
     }

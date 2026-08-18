@@ -181,7 +181,10 @@ input[type=text],
 input[type=email], 
 input[type=password], 
 input[type=tel],
-select, textarea {
+input[type=date],
+input[type=file],
+select, 
+textarea {
     width: 100%;
     padding: 0.6rem 0.7rem;
     border: 1px solid var(--line);
@@ -254,9 +257,49 @@ textarea {
     margin: 0; 
 }
 
+/*Categories*/
+.category-list form {
+    display: flex;
+    justify-content: center; 
+    gap: 0.6rem; 
+    flex-wrap: wrap; 
+    margin: 1rem 0 1.8rem;
+}
+
+.category-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    background: var(--manila-2);
+    border: 1px solid var(--line);
+    font-size: 0.82rem;
+    text-decoration: none;
+    color: var(--text-main);
+    box-shadow: 3px 3px 0 rgba(31, 58, 46, 0.08); 
+}
+
+.category-btn.active { 
+    background: var(--stamp-red); 
+    color: #fbe9e4; 
+    border-color: var(--stamp-red); 
+}
+
+.category-btn:hover { 
+    background: var(--ink-green); color: #fff; 
+    border-color: var(--ink-green); }
+
+/*Book list*/
+
 .book-list {
     display: flex;
     gap: 10px;
+    overflow-x: auto;                  
+    -webkit-overflow-scrolling: touch;        
+}
+
+.book-list::-webkit-scrollbar {
+    display: none;
 }
 
 .book-card {
@@ -264,10 +307,20 @@ textarea {
 }
 
 .book-card img {
+    display: block;
     width: 150px;
     height: 220px;
     object-fit: cover;
-    display: block;
+    padding: 0.2rem;
+    border: 1px solid var(--line);
+    box-shadow: 3px 3px 0 rgba(31, 58, 46, 0.08); 
+}
+
+.no-books {
+    color: var(--text-muted);
+    padding: 1.4rem;
+    border: 1px dashed var(--line);
+    text-align: center;
 }
 
 

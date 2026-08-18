@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "secondchapter";
 $password = "cB]EYDah/79Jos0O";
@@ -11,20 +13,30 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-    $fullname = $_POST['fullname'] ?? ''; 
-    $email = $_POST['email'] ?? ''; 
-    $phonenum = $_POST['phonenum'] ?? ''; 
-    $categoryID = $_POST['categoryID'] ?? ''; 
-    $password = $_POST['password'] ?? ''; 
-    $confirm_password = $_POST['confirm_password'] ?? '';
+$error = "";
 
-     $sql = "INSERT INTO user (fullname, email, phonenum, categoryID, password)
-            VALUES ('$fullname', '$email', '$phonenum', " . ($categoryID === NULL ? "NULL" : "'$categoryID'") . ",'$password')";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
+    $bookID = $_POST['bookID'] ?? ''; 
+    $ISBN = $_POST['ISBN'] ?? ''; 
+    $title = $_POST['title'] ?? ''; 
+    $author = $_POST['author'] ?? ''; 
+    $categoryID = $_POST['categoryID'] ?? ''; 
+    $description = $_POST['description'] ?? '';
+    $donatedBy = $_SESSION['email'] ?? '';
+    $donatedDate = $_POST['donatedDate'] ?? '';
+    $bookImage = $_POST['bookImage'] ?? '';
+
+    if (empty($donatedDate) || empty($ISBN) || empty($title) || empty($author) || empty($categoryID) || empty($description) || empty($bookImage)) 
+    {
+    $error = "Please fill in all fields.";
+    } else {
+     $sql = "INSERT INTO booklist (ISBN, title, author, categoryID, description, donatedBy, donatedDate, bookImage)
+            VALUES ('$ISBN', '$title', '$author', '$categoryID', '$description', '$donatedBy', '$donatedDate' ,'$bookImage')";
 
     if (mysqli_query($conn, $sql)) {        
         header("Location: home.php");
         exit();
+        }
     }
 }
 ?>
@@ -61,45 +73,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="donate-body">
 
-                <?php
-                    if (isset($_GET['error'])) {
-                    echo '<p class="error-message">' . htmlspecialchars($_GET['error']) . '</p>';
-                    }   
+                 <?php
+                if ($error != "") {
+                echo '<p class="error-message">' . htmlspecialchars($error) . '</p>';
+                }
                 ?>
 
                 <form action="donate.php" method="POST">
 
-                    <label for="date">DONATION DATE</label>
-                    <input type="date" name="donationDate" value="<?php echo $today; ?>" min="<?php echo $today; ?>" required>
+                    <label for="donatedDate">DONATION DATE</label>
+                    <input type="date" name="donatedDate" value="<?php echo $today; ?>" min="<?php echo $today; ?>">
 
                     <label for="ISBN">ISBN</label>
-                    <input type="text" name="ISBN" inputmode="numeric" placeholder="e.g. 9783161484100" required>
+                    <input type="text" name="ISBN" value="<?php echo htmlspecialchars($_POST['ISBN'] ?? ''); ?>" inputmode="numeric" placeholder="e.g. 9783161484100">
 
-                    <h3>BOOK TITLE</h3>
-                    <input type="text" name="title" required>
+                    <label for="title">BOOK TITLE</label>
+                    <input type="text" name="title" value="<?php echo htmlspecialchars($_POST['title'] ?? ''); ?>">
 
-                    <h3>AUTHOR</h3>
-                    <input type="text" name="author" required>
+                    <label for="author">AUTHOR</label>
+                    <input type="text" name="author" value="<?php echo htmlspecialchars($_POST['author'] ?? ''); ?>">
 
-                    <h3>CATEGORY</h3>
-                        <select name="categoryID" required>
+                    <label for="category">CATEGORY</label>
+                        <select name="categoryID">
 
                         <option value="">Choose a category</option>
 
                         <?php
+                        $selectedCategory = $_POST['categoryID'] ?? '';
                         $result = $conn->query("SELECT categoryID, categoryName FROM bookcategory");
                         while ($row = $result->fetch_assoc()) {
-                        ?>
-                        <option value="<?php echo $row['categoryID']; ?>">
-                            <?php echo $row['categoryName']; ?>
-                        </option>
-                        <?php
+                            $selected = ($row['categoryID'] == $selectedCategory) ? 'selected' : '';
+                            echo '<option value="' . $row['categoryID'] . '" ' . $selected . '>' . htmlspecialchars($row['categoryName']) . '</option>';
                         }
                         ?>
                         </select>
 
-                    <h3>COVER PHOTO</h3>
-                    <input type="file" name="coverPhoto" accept="image/*" required>
+                    <label for="description">BOOK DESCRIPTION</label>
+                    <textarea name="description"><?php echo htmlspecialchars($_POST['description'] ?? ''); ?></textarea>
+                    
+                    <label for="bookImage">COVER PHOTO</label>
+                    <input type="file" name="bookImage" accept="image/*">
 
                     <button type="submit" class="index-btn">DONATE</button>   
                 </form>

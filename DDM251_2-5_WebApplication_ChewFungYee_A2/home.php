@@ -119,15 +119,15 @@ $recentResult = $conn->query($recentSQL);
 
     <div class="category-list">
       <form method="GET">
-        <button class="<?php echo (!isset($_GET['booklist']) || $_GET['booklist']=="") ? "active" : ""; ?>" name="booklist" value="">All Books</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Fantasy") ? "active" : ""; ?>" name="booklist" value="Fantasy">Fantasy</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Mystery") ? "active" : ""; ?>" name="booklist" value="Mystery">Mystery</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Romance") ? "active" : ""; ?>" name="booklist" value="Romance">Romance</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Sci-Fi") ? "active" : ""; ?>" name="booklist" value="Sci-Fi">Sci-Fi</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Biography") ? "active" : ""; ?>" name="booklist" value="Biography">Biography</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Self-Help") ? "active" : ""; ?>" name="booklist" value="Self-Help">Self-Help</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Childrens") ? "active" : ""; ?>" name="booklist" value="Childrens">Children's</button>
-        <button class="<?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Other") ? "active" : ""; ?>" name="booklist" value="Other">Other</button>
+        <button class="category-btn <?php echo (!isset($_GET['booklist']) || $_GET['booklist']=="") ? "active" : ""; ?>" name="booklist" value="">All Books</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Fantasy") ? "active" : ""; ?>" name="booklist" value="Fantasy">Fantasy</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Mystery") ? "active" : ""; ?>" name="booklist" value="Mystery">Mystery</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Romance") ? "active" : ""; ?>" name="booklist" value="Romance">Romance</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Sci-Fi") ? "active" : ""; ?>" name="booklist" value="Sci-Fi">Sci-Fi</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Biography") ? "active" : ""; ?>" name="booklist" value="Biography">Biography</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Self-Help") ? "active" : ""; ?>" name="booklist" value="Self-Help">Self-Help</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Childrens") ? "active" : ""; ?>" name="booklist" value="Childrens">Children's</button>
+        <button class="category-btn <?php echo (isset($_GET['booklist']) && $_GET['booklist']=="Other") ? "active" : ""; ?>" name="booklist" value="Other">Other</button>
       </form>
     </div>
 
@@ -143,9 +143,7 @@ $recentResult = $conn->query($recentSQL);
     ?>
       
       <a href="bookdetails.php?bookID=<?php echo $book['bookID']; ?>" class="book-card">
-          <img 
-              src="images/<?php echo $book['bookImage']; ?>" 
-          >
+          <img src="images/<?php echo $book['bookImage']; ?>">
           <h3><?php echo $book['title']; ?></h3>
           <p><?php echo $book['author']; ?></p>
       </a>
@@ -156,7 +154,7 @@ $recentResult = $conn->query($recentSQL);
     } else {
     ?>
       <p class="no-books">
-        No books here yet. Be the first to donate one!
+        No books here yet. <a class="donate" href="donate.php">Be the first to donate one!</a>
       </p>
     <?php
     }
@@ -185,7 +183,7 @@ $recentResult = $conn->query($recentSQL);
     } else {
     ?>
       <p class="no-books">
-        No books here yet. Be the first to donate one!
+        No books here yet. <a class="donate" href="donate.php">Be the first to donate one!</a>
       </p>
     <?php
     }
