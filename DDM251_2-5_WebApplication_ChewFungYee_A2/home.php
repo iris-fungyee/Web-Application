@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
     $categoryID = $user['categoryID'];
 
     } else {
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 

@@ -116,7 +116,9 @@ $_SESSION['order_form'] = [
 <body>
     <div class="sidebar">
         <h2>iCFY Shop</h2>
-        <button>Dashboard</button>
+        <button>
+            <a href="welcome.php" class="btn">Dashboard</a>
+        </button>
         <button><a href="customer.php" class="btn">Customer</a></button>
         <button><a href="product.php" class="btn">Product</a></button>
         <div class="dropdown">
@@ -129,7 +131,9 @@ $_SESSION['order_form'] = [
                 <a href="order.php" class="sub-btn">Order List</a>
             </div>
         </div>
-        <button>Log out</button>
+        <button>
+            <a href="logOut.php" class="btn">Log out</a>
+        </button>
     </div>
 
 <div class="main-content">

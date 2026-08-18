@@ -45,9 +45,11 @@ $result = mysqli_query($conn, $query) or die("Couldn't execute query");
 </style>
 </head>
 <body>
-       <div class="sidebar">
+    <div class="sidebar">
         <h2>iCFY Shop</h2>
-        <button>Dashboard</button>
+        <button>
+            <a href="welcome.php" class="btn">Dashboard</a>
+        </button>
          <button>
            <a href="customer.php" class="btn">Customer</a>
         </button>
@@ -64,7 +66,9 @@ $result = mysqli_query($conn, $query) or die("Couldn't execute query");
                 <a href="order.php" class="sub-btn">Order List</a>
          </div>
         </div>
-        <button>Log out</button>
+        <button>
+            <a href="logOut.php" class="btn">Log out</a>
+        </button>
     </div>
 
     <div>

@@ -1,4 +1,7 @@
 <?php
+
+session_start(); 
+
 $servername = "localhost";
 $username = "icfyshop";
 $password = "ouAnDc-5hKQH9n(l";
@@ -32,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user["password"] != $password) {
                 echo "Your password is incorrect";
             } else {
+                $_SESSION['username'] = $_POST['username'];
                 header("Location: welcome.php");
                 exit();
             }

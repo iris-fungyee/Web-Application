@@ -37,7 +37,9 @@ if ($conn->connect_error) {
 <body>
   <div class="sidebar">
         <h2>iCFY Shop</h2>
-        <button>Dashboard</button>
+        <button>
+            <a href="welcome.php" class="btn">Dashboard</a>
+        </button>
          <button>
            <a href="customer.php" class="btn">Customer</a>
         </button>
@@ -54,7 +56,9 @@ if ($conn->connect_error) {
                 <a href="order.php" class="sub-btn">Order List</a>
          </div>
         </div>
-        <button>Log out</button>
+        <button>
+            <a href="logOut.php" class="btn">Log out</a>
+        </button>
     </div>
 
     <div>

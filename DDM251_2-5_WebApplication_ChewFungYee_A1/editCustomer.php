@@ -60,9 +60,11 @@ $row = mysqli_fetch_assoc($result);
 </head>
 <body>
 
-    <div class="sidebar">
+<div class="sidebar">
         <h2>iCFY Shop</h2>
-        <button>Dashboard</button>
+        <button>
+            <a href="welcome.php" class="btn">Dashboard</a>
+        </button>
          <button>
            <a href="customer.php" class="btn">Customer</a>
         </button>
@@ -75,11 +77,13 @@ $row = mysqli_fetch_assoc($result);
             <span class="arrow">&#9660;</span>
         </button>
             <div class="dropdown-container">
-                <a href="" class="sub-btn">Create An Order</a>
+                <a href="createOrder.php" class="sub-btn">Create An Order</a>
                 <a href="order.php" class="sub-btn">Order List</a>
          </div>
         </div>
-        <button>Log out</button>
+        <button>
+            <a href="logOut.php" class="btn">Log out</a>
+        </button>
     </div>
 
     <a href="customer.php"><input type="submit" value="Back"></a>
