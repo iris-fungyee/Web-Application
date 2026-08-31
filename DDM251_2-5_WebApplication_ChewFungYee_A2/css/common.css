@@ -64,6 +64,13 @@ a {
     text-align: center;
 }
 
+.success-message {
+    color: var(--card-white);
+    background-color: var(--ink-green-2);
+    padding: 5px;
+    text-align: center;
+}
+
 /*Header*/
 .header-banner {
     width: 100%;
@@ -104,7 +111,8 @@ h1 {
 
 /*Log In & Register & Donate*/
 .access-box,
-.donate-box
+.donate-box,
+.profile-box
 {
     background-color: var(--card-white);
     border: 1px solid var(--line);
@@ -115,7 +123,8 @@ h1 {
 }
 
 .access-box::before,
-.donate-box::before
+.donate-box::before,
+.profile-box::before
 {
     content: '';
     position: absolute;
@@ -128,7 +137,9 @@ h1 {
 .access-header,
 .access-body,
 .donate-body,
-.donate-header {
+.donate-header,
+.profile-info,
+.profile-box h2 {
     padding-left: 1.5rem;
 }
 
@@ -244,17 +255,28 @@ textarea {
 }
 
 /*Section Title*/
-.section-title {
-    display: flex;
+.section-title,
+.bookdetail-header,
+.review {
     align-items: baseline;
-    justify-content: space-between;
     border-bottom: 2px solid var(--line);
     padding-bottom: 0.2rem;
     margin: 2rem 0 1rem;
 }
 
-.section-title h2 { 
+.section-title h2,
+.bookdetail-header h2 { 
     margin: 0; 
+}
+
+.section-title{
+    display: flex;
+    justify-content: space-between;
+}
+
+.bookdetail-header{
+    display: flex;
+    gap: 10px;
 }
 
 /*Categories*/
@@ -306,7 +328,8 @@ textarea {
     width: 150px;
 }
 
-.book-card img {
+.book-card img,
+.book-card-details img {
     display: block;
     width: 150px;
     height: 220px;
@@ -323,6 +346,40 @@ textarea {
     text-align: center;
 }
 
+.book-card-details{
+    width: 300px;
+}
+
+/*Profile*/
+.profile-stats{
+    display: flex; 
+    justify-content: space-evenly;
+    margin: 1.2rem 0 1.8rem; 
+    background: var(--card-white);
+    border: 1px solid var(--line);
+    padding: 1rem 1.2rem;
+    text-align: center;
+}
+
+/*Change Password*/
+.change-password {
+    margin-top: 2rem;
+}
+
+.change-password summary {
+    cursor: pointer;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    color: var(--ink-green);
+}
+
+.change-password form {
+    margin-top: 1rem;
+}
+
+.logout-section {
+    padding-top: 2rem;
+}
 
 
 

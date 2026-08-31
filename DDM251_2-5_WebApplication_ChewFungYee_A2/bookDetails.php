@@ -104,20 +104,31 @@ $averageRating = round($rating['averageRating'], 1);
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-    <div id="container">
-        <div class="header">
-            <a href="home.php"><h1>SecondChapter</h1></a>
-        </div>
 
+<div class="header-banner">
+    <div class="header">
+      <a class="logo" href="home.php"><h1>Second<span class="logo">Chapter</span></h1></a>
+      <a href="profile.php" class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" 
+             stroke="currentColor" stroke-width="2" 
+             stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </a>
+    </div>  
+</div>
+
+    <div id="container">
         <div class="bookdetail-box">
             <div class="bookdetail-header">
                 <a href="home.php">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                 </a>
                 <h2>Book Details</h2>
             </div>
 
-            <div class="book-card">
+            <div class="book-card-details">
                 <img src="images/<?php echo $book['bookImage']; ?>">
                 <h3><?php echo $book['title']; ?></h3>
                 <p><?php echo $book['author']; ?></p>
@@ -129,14 +140,14 @@ $averageRating = round($rating['averageRating'], 1);
                 <?php
                 if ($hasRead) {
                 ?>
-                <button type="button" disabled>✓ READ</button>
+                <button type="button" class="second-btn" disabled>✓ READ</button>
                 <?php
                 } else {
                 ?>
 
                 <form action="readbook.php" method="POST">
                     <input type="hidden" name="bookID" value="<?php echo $book['bookID']; ?>">
-                    <button type="submit">MARK AS READ</button>
+                    <button type="submit" class="index-btn">MARK AS READ</button>
                 </form>
                 <?php
                 }
@@ -201,8 +212,9 @@ $averageRating = round($rating['averageRating'], 1);
                     <label for="reviewText">Your Review</label>
                     <textarea name="reviewText" id="reviewText" required></textarea>
 
-                    <button type="submit"> SUBMIT REVIEW</button>
+                    <button type="submit" class="index-btn"> SUBMIT REVIEW</button>
                 </form>
+            </br>
             <?php
             }
             ?>

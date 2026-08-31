@@ -12,20 +12,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// If user clicks "Create An Order" fresh from the sidebar menu, reset the form
-if (isset($_GET['new'])) {
-    unset($_SESSION['order_form']);
-}
-
-// Fetch dropdown data ONCE
-$customers = [];
-$customerResult = $conn->query("SELECT * FROM customer");
-if ($customerResult) {
-    while ($row = $customerResult->fetch_assoc()) {
-        $customers[] = $row;
-    }
-}
-
 $productList = [];
 $productResult = $conn->query("SELECT * FROM product");
 if ($productResult) {
@@ -38,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedUser = $_POST['username'] ?? '';
     $products = $_POST['productName'] ?? [''];
     $quantity = $_POST['quantity'] ?? [''];
-} elseif (isset($_GET['error']) && isset($_SESSION['order_form'])) {
+} else if (isset($_GET['error']) && isset($_SESSION['order_form'])) {
     $selectedUser = $_SESSION['order_form']['username'] ?? '';
     $products = $_SESSION['order_form']['products'] ?? [''];
     $quantity = $_SESSION['order_form']['quantity'] ?? [''];
@@ -90,16 +76,7 @@ $_SESSION['order_form'] = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create An Order</title>
     <link rel="stylesheet" href="css/common.css">
-    <style>
-        input[type=text] {
-            padding: 5px;
-            box-sizing: border-box;
-        }
-
-        h3 {
-            margin-left: 20px;
-        }
-
+  <style>
         .product-row {
             display: flex;
             align-items: flex-end;
@@ -111,25 +88,30 @@ $_SESSION['order_form'] = [
             display: block;
         }
     </style>
+
 </head>
 
 <body>
-    <div class="sidebar">
+<div class="sidebar">
         <h2>iCFY Shop</h2>
         <button>
             <a href="welcome.php" class="btn">Dashboard</a>
         </button>
-        <button><a href="customer.php" class="btn">Customer</a></button>
-        <button><a href="product.php" class="btn">Product</a></button>
+         <button>
+           <a href="customer.php" class="btn">Customer</a>
+        </button>
+        <button>
+            <a href="product.php" class="btn">Product</a>
+        </button>
         <div class="dropdown">
-            <button class="dropdown-btn">
-                Order <span class="arrow">&#9660;</span>
-            </button>
+        <button class="dropdown-btn">
+            Order
+            <span class="arrow">&#9660;</span>
+        </button>
             <div class="dropdown-container">
-                <!-- Appended ?new=1 so clicking sidebar starts a brand new order -->
-                <a href="createOrder.php?new=1" class="sub-btn">Create An Order</a>
+                <a href="createOrder.php" class="sub-btn">Create An Order</a>
                 <a href="order.php" class="sub-btn">Order List</a>
-            </div>
+         </div>
         </div>
         <button>
             <a href="logOut.php" class="btn">Log out</a>
@@ -146,64 +128,77 @@ $_SESSION['order_form'] = [
     ?>
   
     <form action="" method="POST">
-        <!-- Customer Selection -->
         <div class="form-group">
             <label for="username">Username</label>
             <select name="username">
-                <option value="">Select a username</option>
-                <?php foreach ($customers as $customer): ?>
-                    <?php $uSelected = ($customer['customerID'] == $selectedUser) ? 'selected' : ''; ?>
-                    <option value="<?php echo $customer['customerID']; ?>" <?php echo $uSelected; ?>>
-                        <?php echo htmlspecialchars($customer['username']); ?>
-                    </option>
-                <?php endforeach; ?>
+            <option value="">Select a username</option>
+                <?php
+                $customerResult = $conn->query("SELECT customerID, username FROM customer");
+                while ($customer = $customerResult->fetch_assoc()) {
+                ?>
+            <option value="<?php echo $customer['customerID']; ?>" 
+            <?php if ($customer['customerID'] == $selectedUser) echo 'selected'; ?>>
+            <?php echo htmlspecialchars($customer['username']); ?>
+            </option>
+            <?php
+            }
+            ?>
             </select>
         </div>
         <br>
 
-        <!-- Dynamic Product Rows -->
-        <div class="product-container" id="productContainer">
-            <?php foreach ($products as $index => $selectedProduct): ?>
-                <div class="product-row">
-                    <!-- Product Dropdown -->
-                    <div class="form-group inline">
-                        <label>Product Name</label>
-                        <select name="productName[]">
-                            <option value="">Select a product</option>
-                            <?php foreach ($productList as $product): ?>
-                                <?php $pSelected = ($product['productID'] == $selectedProduct) ? 'selected' : ''; ?>
-                                <option value="<?php echo $product['productID']; ?>" <?php echo $pSelected; ?>>
-                                    <?php echo htmlspecialchars($product['productName']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-            
-                    <!-- Quantity Dropdown -->
-                    <div class="form-group inline">
-                        <label>Quantity</label>
-                        <select name="quantity[]">
-                            <option value="">Select Quantity</option>
-                            <?php for ($i = 1; $i <= 10; $i++): ?>
-                                <?php $qSelected = (isset($quantity[$index]) && $quantity[$index] == $i) ? 'selected' : ''; ?>
-                                <option value="<?php echo $i; ?>" <?php echo $qSelected; ?>><?php echo $i; ?></option>
-                            <?php endfor; ?>
-                        </select>
-                    </div>
+      <div class="product-container">
+    <?php 
+    for ($index = 0; $index < count($products); $index++) {
+        $selectedProduct = $products[$index];
+    ?>
+        <div class="product-row">
+            <div class="form-group inline">
+                <label>Product Name</label>
+                <select name="productName[]">
+                    <option value="">Select a product</option>
+                    <?php 
+                    for ($p = 0; $p < count($productList); $p++) {
+                        $product = $productList[$p];
+                        $pSelected = ($product['productID'] == $selectedProduct) ? 'selected' : '';
+                    ?>
+                        <option value="<?php echo $product['productID']; ?>" <?php echo $pSelected; ?>>
+                            <?php echo htmlspecialchars($product['productName']); ?>
+                        </option>
+                    <?php 
+                    } 
+                    ?>
+                </select>
+            </div>
 
-                    <!-- Delete Row Button -->
-                    <button type="submit" name="delete_index" value="<?php echo $index; ?>">Delete</button>
-                </div>
-            <?php endforeach; ?>
+            <div class="form-group inline">
+                <label>Quantity</label>
+                <select name="quantity[]">
+                    <option value="">Select Quantity</option>
+                    <?php 
+                    for ($i = 1; $i <= 10; $i++) {
+                        $qSelected = (isset($quantity[$index]) && $quantity[$index] == $i) ? 'selected' : '';
+                    ?>
+                        <option value="<?php echo $i; ?>" <?php echo $qSelected; ?>><?php echo $i; ?></option>
+                    <?php 
+                    } 
+                    ?>
+                </select>
+            </div>
+
+            <button type="submit" name="delete_index" value="<?php echo $index; ?>">Delete</button>
         </div>
-
-        <!-- Add Product Row Button -->
+    <?php 
+    } 
+    ?>
+</div>
+  
         <div class="form-row">
             <button type="submit" name="action" value="add">+ Add Another Product</button>
         </div>
 
         <br>
-        <!-- Submit / Navigation Buttons -->
+      
         <div class="form-row">
             <button type="submit" formaction="insertOrder.php">Submit Order</button>
             <a href="order.php" class="btn"><button type="button">Back to Order List</button></a>

@@ -112,7 +112,7 @@ $result = mysqli_query($conn, $query) or die("Couldn't execute query");
     </table>
     
         <a href="order.php" class="btn"><button type="button">Back to Order List</button></a>
-        <a href=""><input type="button" value="Edit"></a>
+        <a href="editOrder.php?orderID=<?php echo $orderID; ?>"><input type="button" value="Edit"></a>
     </div>
        
 

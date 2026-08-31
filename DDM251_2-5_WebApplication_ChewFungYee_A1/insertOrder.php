@@ -31,23 +31,17 @@ function redirectWithError($message) {
     exit();
 }
 
-// ===============================
 // 1. CHECK CUSTOMER
-// ===============================
 if (empty($selectedUser)) {
     redirectWithError("Please select a username.");
 }
 
-// ===============================
 // 2. CHECK PRODUCTS AND QUANTITY
-// ===============================
 if (empty($products) || empty($quantity)) {
     redirectWithError("Please add at least one product.");
 }
 
-// ===============================
 // 3. CHECK EACH ROW IS FILLED
-// ===============================
 foreach ($products as $index => $product) {
     if (empty($product)) {
         redirectWithError("Please select a product for every row.");
@@ -58,16 +52,12 @@ foreach ($products as $index => $product) {
     }
 }
 
-// ===============================
 // 4. CHECK DUPLICATE PRODUCTS
-// ===============================
 if (count($products) != count(array_unique($products))) {
     redirectWithError("Products cannot be duplicated.");
 }
 
-// ===============================
 // 5. GET CUSTOMER INFORMATION
-// ===============================
 $customerQuery = "SELECT * FROM customer WHERE customerID = '$selectedUser'";
 $customerResult = mysqli_query($conn, $customerQuery);
 
@@ -79,28 +69,17 @@ $customer = mysqli_fetch_assoc($customerResult);
 $customerUsername = $customer['username'];
 $customerName = $customer['name'];
 
-// ===============================
 // 6. CREATE ORDER ID
-// ===============================
 $orderQuery = "SELECT MAX(orderID) AS maxOrderID FROM orderlist";
 $orderResult = mysqli_query($conn, $orderQuery);
 $orderRow = mysqli_fetch_assoc($orderResult);
 
 $orderID = ($orderRow['maxOrderID'] == NULL) ? 1 : $orderRow['maxOrderID'] + 1;
 
-// ===============================
 // 7. GET CURRENT DATE/TIME
-// ===============================
 $orderDate = date("Y-m-d H:i:s");
 
-// ===============================
-// 8. INSERT EACH PRODUCT
-// ===============================
-$orderdetailsID = 1;
-
-// ===============================
-// 8. INSERT EACH PRODUCT
-// ===============================
+// 8. INSERT EACH PRODUCT=
 foreach ($products as $index => $productID) {
     $qty = $quantity[$index];
 
@@ -122,12 +101,8 @@ foreach ($products as $index => $productID) {
     }
 }
 
-// ===============================
 // 9. SUCCESS - CLEAR SESSION & REDIRECT
-// ===============================
 unset($_SESSION['order_form']);
-session_write_close();
-mysqli_close($conn);
 
 header("Location: order.php?success=Order created successfully.");
 exit();

@@ -12,6 +12,9 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
+$error = "";
+$success = "";
+
 $email = $_SESSION['email'];
 
 $userQuery = "SELECT *, bookcategory.categoryName
@@ -72,14 +75,17 @@ if (isset($_POST['changePassword'])) {
     $newPassword = $_POST['newPassword'];
     $confirmPassword = $_POST['confirmPassword'];
 
-
     if ($currentPassword != $user['password']) {
 
-        $passwordMessage = "Current password is incorrect.";
+        $error = "Current password is incorrect.";
 
     } else if ($newPassword != $confirmPassword) {
 
-        $passwordMessage = "New passwords do not match.";
+        $error = "New passwords do not match.";
+    
+    } else if (strlen($newPassword) < 6) {
+
+    $error = "Password must be at least 6 characters long."; 
 
     } else {
 
@@ -87,9 +93,11 @@ if (isset($_POST['changePassword'])) {
                            SET password = '$newPassword'
                            WHERE userID = '$userID'";
 
-        mysqli_query($conn, $updatePassword);
-
-        $passwordMessage = "Password changed successfully.";
+        if (mysqli_query($conn, $updatePassword)) {
+            $success = "Password changed successfully.";
+        } else {
+            $error = "Unable to change password.";
+        }
     }
 }
 ?>
@@ -103,16 +111,27 @@ if (isset($_POST['changePassword'])) {
     <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
-    <div id="container">
-        <div class="header">
-            <a href="home.php"><h1>SecondChapter</h1></a>
-        </div>
 
-
+<div class="header-banner">
+    <div class="header">
+      <a class="logo" href="home.php"><h1>Second<span class="logo">Chapter</span></h1></a>
+      <a href="profile.php" class="profile-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" 
+             stroke="currentColor" stroke-width="2" 
+             stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+      </a>
+    </div>  
+</div>
+    
+<div id="container">
     <div class="profile-box">
         <h2>My Profile</h2>
 
         <div class="profile-info">
+            <form method="POST">
             <label for="fullname">FULL NAME</label>
             <input type="text" name="fullname" id="fullname" value="<?php echo htmlspecialchars($user['fullname']); ?>" required>
 
@@ -135,7 +154,12 @@ if (isset($_POST['changePassword'])) {
                 <option value="8"<?php if ($user['categoryID'] == 8) echo "selected"; ?>>Other</option>
             </select>
 
+            <button type="submit" name="updateProfile" class="index-btn">SAVE CHANGES</button>
+            </form>
+        
+            <h3>YOUR ACTIVITY</h3>
         <div class="profile-stats">
+            
             <div class="stat">
                 <h3><?php echo $read['totalRead']; ?></h3>
                 <p>BOOKS READ</p>
@@ -145,30 +169,43 @@ if (isset($_POST['changePassword'])) {
                 <h3><?php echo $reviews['totalReviews']; ?></h3>
                 <p>REVIEWS</p>
             </div>
-
-            <button type="submit" name="updateProfile">SAVE CHANGES</button>
+        
+            
         </div>
 
-        <div class="change-password">
-            <h3>CHANGE PASSWORD</h3>
+        <details class="change-password" <?php if ($error != "" || $success != "") echo "open"; ?>>
+            <summary>CHANGE PASSWORD</summary>
+
+            <?php
+            if ($error != "") {
+                echo '<p class="error-message">' . htmlspecialchars($error) . '</p>';
+            }
+
+            if ($success != "") {
+                echo '<p class="success-message">' . htmlspecialchars($success) . '</p>';
+            }
+            ?>
 
             <form method="POST">
                 <label for="currentPassword">CURRENT PASSWORD</label>
-                <input type="password" name="currentPassword" id="currentPassword" required>
+                <input type="password" name="currentPassword" id="currentPassword">
 
                 <label for="newPassword">NEW PASSWORD</label>
-                <input type="password" name="newPassword" id="newPassword" required>
+                <input type="password" name="newPassword" id="newPassword">
 
                 <label for="confirmPassword">CONFIRM NEW PASSWORD</label>
-                <input type="password" name="confirmPassword" id="confirmPassword" required>
+                <input type="password" name="confirmPassword" id="confirmPassword">
 
-        <button type="submit" name="changePassword">CHANGE PASSWORD</button>
+        <button type="submit" name="changePassword" class="index-btn">CHANGE PASSWORD</button>
             </form>
-        </div>
+    </details>
         
+    <div class ="logout-section">
         <form action="logOut.php" method="POST">
-            <button type="submit">LOG OUT</button>
+            <button type="submit" class="second-btn">LOG OUT</button>
         </form>
-    </div>
+</div>
+
+</div>
 </body>
 </html>

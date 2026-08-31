@@ -14,6 +14,7 @@ if ($conn->connect_error) {
 }
 
 $error = "";
+$today = date('Y-m-d');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
     $bookID = $_POST['bookID'] ?? ''; 
@@ -26,12 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $donatedDate = $_POST['donatedDate'] ?? '';
     $bookImage = $_POST['bookImage'] ?? '';
 
-    if (empty($donatedDate) || empty($ISBN) || empty($title) || empty($author) || empty($categoryID) || empty($description) || empty($bookImage)) 
+    $imageName = uniqid() . '_' . $_FILES['bookImage']['name'];
+    $imagePath = 'images/' . $imageName;
+
+    if (empty($donatedDate) || empty($ISBN) || empty($title) || empty($author) || empty($categoryID) || empty($description) || empty($_FILES['bookImage']['name'])) 
     {
     $error = "Please fill in all fields.";
     } else {
+
+     move_uploaded_file($_FILES['bookImage']['tmp_name'], $imagePath);
+
      $sql = "INSERT INTO booklist (ISBN, title, author, categoryID, description, donatedBy, donatedDate, bookImage)
-            VALUES ('$ISBN', '$title', '$author', '$categoryID', '$description', '$donatedBy', '$donatedDate' ,'$bookImage')";
+            VALUES ('$ISBN', '$title', '$author', '$categoryID', '$description', '$donatedBy', '$donatedDate' ,'$imagePath')";
 
     if (mysqli_query($conn, $sql)) {        
         header("Location: home.php");
@@ -79,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 ?>
 
-                <form action="donate.php" method="POST">
+                <form action="donate.php" method="POST" enctype="multipart/form-data">
 
                     <label for="donatedDate">DONATION DATE</label>
                     <input type="date" name="donatedDate" value="<?php echo $today; ?>" min="<?php echo $today; ?>">

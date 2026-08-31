@@ -90,10 +90,15 @@ if ($conn->connect_error) {
                     </a>
                  <td> 
                 <td>    
+                   <a href="editOrder.php?orderID=<?php echo $row['orderID']; ?>">
                     <input type="button" value="Edit">
+                    </a>
                 </td>
                 <td> 
+                    <a href="deleteOrder.php?orderID=<?php echo $row['orderID']; ?>" 
+                    onclick="return confirm('Are you sure you want to delete Order ID <?php echo $row['orderID']; ?>?');">
                     <input type="button" value="Delete">
+                    </a>
                 </td>
             </tr>
         <?php
