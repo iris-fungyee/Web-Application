@@ -129,7 +129,14 @@ $averageRating = round($rating['averageRating'], 1);
             </div>
 
             <div class="book-card-details">
-                <img src="images/<?php echo $book['bookImage']; ?>">
+                  <a href="bookdetails.php?bookID=<?php echo $book['bookID']; ?>" class="book-card">
+                <?php
+                $image = $book['bookImage'];
+                if (strpos($image, 'images/') !== 0) {
+                    $image = 'images/' . $image;
+                }
+                ?>
+                <img src="<?php echo htmlspecialchars($image); ?>" alt="Book Cover">
                 <h3><?php echo $book['title']; ?></h3>
                 <p><?php echo $book['author']; ?></p>
                 <p><?php echo $book['categoryName']; ?></p>
