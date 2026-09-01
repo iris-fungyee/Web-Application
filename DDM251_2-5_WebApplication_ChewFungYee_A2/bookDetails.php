@@ -129,7 +129,6 @@ $averageRating = round($rating['averageRating'], 1);
             </div>
 
             <div class="book-card-details">
-                  <a href="bookdetails.php?bookID=<?php echo $book['bookID']; ?>" class="book-card">
                 <?php
                 $image = $book['bookImage'];
                 if (strpos($image, 'images/') !== 0) {
@@ -199,32 +198,36 @@ $averageRating = round($rating['averageRating'], 1);
         }
             ?>
 
-            <?php
-            if (!$hasReviewed) {
-            ?>
+        <?php
+        if ($hasRead && !$hasReviewed) {
+        ?>
+
             <h3>Write A Review</h3>
-                <form method="POST">
-                    <input type="hidden" name="bookID" value="<?php echo $book['bookID']; ?>">
 
-                    <label for="rating">Rating</label>
-                    <select name="rating" id="rating" required>
-                        <option value="">Choose a rating</option>
-                        <option value="5">★★★★★</option>
-                        <option value="4">★★★★☆</option>
-                        <option value="3">★★★☆☆</option>
-                        <option value="2">★★☆☆☆</option>
-                        <option value="1">★☆☆☆☆</option>
-                    </select>
+            <form method="POST">
+                <input type="hidden" name="bookID" value="<?php echo $book['bookID']; ?>">
 
-                    <label for="reviewText">Your Review</label>
-                    <textarea name="reviewText" id="reviewText" required></textarea>
+                <label for="rating">Rating</label>
 
-                    <button type="submit" class="index-btn"> SUBMIT REVIEW</button>
-                </form>
-            </br>
-            <?php
-            }
-            ?>
+                <select name="rating" id="rating" required>
+                    <option value="">Choose a rating</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
+                </select>
+
+                <label for="reviewText">Your Review</label>
+
+                <textarea name="reviewText" id="reviewText" required></textarea>
+
+                <button type="submit" class="index-btn">SUBMIT REVIEW</button>
+            </form>
+
+        <?php
+        } 
+        ?>
         </div>
     </div>
 </body>

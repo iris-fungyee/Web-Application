@@ -274,7 +274,7 @@ textarea {
     justify-content: space-between;
 }
 
-.bookdetail-header{
+.bookdetail-header {
     display: flex;
     gap: 10px;
 }

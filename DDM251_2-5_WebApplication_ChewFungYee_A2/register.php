@@ -33,6 +33,10 @@ if (empty($fullname) || empty($email) || empty($phonenum) || empty($password) ||
 {
     $error = "Please fill in all fields.";
 
+} else if (!preg_match('/^[0-9]{10,11}$/', $phonenum)) {
+
+    $error = "Phone number must be 10 to 11 digits.";
+
 } else if (strlen($password) < 6) {
 
     $error = "Password must be at least 6 characters long.";
@@ -107,7 +111,7 @@ if ($error == "") {
                     <input type="text" name="email" value="<?php echo htmlspecialchars($email); ?>">
 
                     <label for="phonenum">PHONE NUMBER</label>
-                    <input type="tel" name="phonenum"  value="<?php echo htmlspecialchars($phonenum); ?>">
+                    <input type="tel" name="phonenum" value="<?php echo htmlspecialchars($phonenum); ?>"maxlength="11"inputmode="numeric">
 
                     <label for="category">FAVOURITE GENRE</label>
                         <select name="categoryID">

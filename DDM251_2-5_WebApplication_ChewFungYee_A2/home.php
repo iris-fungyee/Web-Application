@@ -41,7 +41,7 @@ if ($selectedCategory != "") {
                   ORDER BY RAND()
                   LIMIT 4";
 
-} else if ($categoryID == NULL) {
+} else if ($categoryID == NULL || $categoryID == 8) {
 
     // No category selected + user has no preference
   $recommendSQL = "SELECT * FROM booklist

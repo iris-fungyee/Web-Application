@@ -139,7 +139,7 @@ if (isset($_POST['changePassword'])) {
             <input type="email" id="email" value="<?php echo htmlspecialchars($user['email']); ?>" disabled>
 
             <label for="phonenum">PHONE NUMBER</label>
-            <input type="text" name="phonenum" id="phonenum" value="<?php echo htmlspecialchars($user['phonenum']); ?>" required>
+            <input type="tel" name="phonenum" id="phonenum" value="<?php echo htmlspecialchars($user['phonenum']); ?>" maxlength="11"inputmode="numeric"required>
 
             <label for="categoryID">FAVOURITE GENRE</label>
             <select name="categoryID" id="categoryID">
