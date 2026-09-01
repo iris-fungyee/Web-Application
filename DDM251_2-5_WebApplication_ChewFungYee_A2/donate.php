@@ -14,7 +14,6 @@ if ($conn->connect_error) {
 }
 
 $error = "";
-$today = date('Y-m-d');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
     $bookID = $_POST['bookID'] ?? ''; 
@@ -24,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoryID = $_POST['categoryID'] ?? ''; 
     $description = $_POST['description'] ?? '';
     $donatedBy = $_SESSION['email'] ?? '';
-    $donatedDate = $_POST['donatedDate'] ?? '';
+    $donatedDate = date('Y-m-d');
     $bookImage = $_POST['bookImage'] ?? '';
 
     $imageName = uniqid() . '_' . $_FILES['bookImage']['name'];
     $imagePath = 'images/' . $imageName;
 
-    if (empty($donatedDate) || empty($ISBN) || empty($title) || empty($author) || empty($categoryID) || empty($description) || empty($_FILES['bookImage']['name'])) 
+    if (empty($ISBN) || empty($title) || empty($author) || empty($categoryID) || empty($description) || empty($_FILES['bookImage']['name'])) 
     {
     $error = "Please fill in all fields.";
     } else {
@@ -89,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <form action="donate.php" method="POST" enctype="multipart/form-data">
 
                     <label for="donatedDate">DONATION DATE</label>
-                    <input type="date" name="donatedDate" value="<?php echo $today; ?>" min="<?php echo $today; ?>">
+                    <p><?php echo date('d/m/Y'); ?></p>
 
                     <label for="ISBN">ISBN</label>
                     <input type="text" name="ISBN" value="<?php echo htmlspecialchars($_POST['ISBN'] ?? ''); ?>" inputmode="numeric" placeholder="e.g. 9783161484100">
